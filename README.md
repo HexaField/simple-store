@@ -117,12 +117,19 @@ import { useSimpleStore } from 'simple-store/react'
 function UserProfile({ userId }) {
   const [user, setUser] = useSimpleStore(() => fetch(`/api/users/${userId}`).then((res) => res.json()))
 
+  const onUpdateName = (name) => {
+    setUser((user) => {
+      user.name = 'Updated Name'
+      return user
+    })
+  }
+
   // Component will suspend until the promise resolves
   return (
     <div>
       <h1>{user.name}</h1>
       <p>{user.email}</p>
-      <button onClick={() => setUser({ ...user, name: 'Updated Name' })}>Update Name</button>
+      <button onClick={onUpdateName}>Update Name</button>
     </div>
   )
 }
