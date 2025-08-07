@@ -25,6 +25,10 @@ npm install react
 
 ## Usage
 
+### Approach to reactivity
+
+The approach this library takes to reactivity follows a loose declarative style, in which re-renders are triggered by any reasonable mutation of data. For single value stores (like a bool, string or number) this happens if the value changes. For object references, this is whenever `.set` is called (including with the setter returned from `useSimpleStore`). This gives you explicit control over not just when you want to re-render but also what, by either passing back the previous value or a new object. Being a simple state management library, there is a lack of extensive tooling and limitations to this approach, hence the name.
+
 ### Framework Agnostic
 
 ```javascript
