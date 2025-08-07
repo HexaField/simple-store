@@ -1,6 +1,6 @@
 {
   "name": "@hexafield/simple-store",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "A lightweight reactive state management library for React and vanilla JavaScript",
   "main": "dist/index.cjs",
