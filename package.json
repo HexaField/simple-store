@@ -1,5 +1,5 @@
 {
-  "name": "simple-store",
+  "name": "@hexafield/simple-store",
   "version": "1.0.0",
   "type": "module",
   "description": "A lightweight reactive state management library for React and vanilla JavaScript",
@@ -41,8 +41,19 @@
     "hooks",
     "typescript"
   ],
-  "author": "",
+  "author": "HexaField",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HexaField/simple-store.git"
+  },
+  "homepage": "https://github.com/HexaField/simple-store#readme",
+  "bugs": {
+    "url": "https://github.com/HexaField/simple-store/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "react": ">=16.8.0"
   },

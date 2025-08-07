@@ -14,7 +14,7 @@ A lightweight reactive state management library for React and vanilla JavaScript
 ## Installation
 
 ```bash
-npm install simple-store
+npm install @hexafield/simple-store
 ```
 
 For React usage, make sure you have React installed:
@@ -32,7 +32,7 @@ The approach this library takes to reactivity follows a loose declarative style,
 ### Framework Agnostic
 
 ```javascript
-import { createSimpleStore, None } from 'simple-store'
+import { createSimpleStore, None } from '@hexafield/simple-store'
 
 // Create a store
 const counterStore = createSimpleStore(0)
@@ -56,13 +56,13 @@ counterStore.set((prev) => prev + 1)
 counterStore.set(None)
 ```
 
-> **⚠️ Important**: For symbol consistency, import all symbols from the same entry point. Don't mix imports from `simple-store` and `simple-store/react` in the same application when using the `None` symbol.
+> **⚠️ Important**: For symbol consistency, import all symbols from the same entry point. Don't mix imports from `@hexafield/simple-store` and `@hexafield/simple-store/react` in the same application when using the `None` symbol.
 
 ### React Hook
 
 ```jsx
 import React from 'react'
-import { useSimpleStore, createSimpleStore, None } from 'simple-store/react'
+import { useSimpleStore, createSimpleStore, None } from '@hexafield/simple-store/react'
 
 function Counter() {
   const [count, setCount] = useSimpleStore(0)
@@ -82,7 +82,7 @@ function Counter() {
 
 ```jsx
 import React from 'react'
-import { useSimpleStore, createSimpleStore, None } from 'simple-store/react'
+import { useSimpleStore, createSimpleStore, None } from '@hexafield/simple-store/react'
 
 // Create and use a global store anywhere
 const UserState = createSimpleStore({ username: '', authToken: '' })
@@ -112,7 +112,7 @@ function Counter() {
 ### Async State
 
 ```jsx
-import { useSimpleStore } from 'simple-store/react'
+import { useSimpleStore } from '@hexafield/simple-store/react'
 
 function UserProfile({ userId }) {
   const [user, setUser] = useSimpleStore(() => fetch(`/api/users/${userId}`).then((res) => res.json()))
