@@ -30,7 +30,7 @@ export function createSimpleStore<T>(initialValue: T | Promise<T> | typeof None,
 
     // Use a unique ID to track if this is still the active promise
     const thisPromiseId = ++currentPromiseId
-    
+
     promise = newPromise
       .then((resolvedValue: T) => {
         if (currentPromiseId === thisPromiseId) {
@@ -123,7 +123,9 @@ export function createSimpleStore<T>(initialValue: T | Promise<T> | typeof None,
       return () => {
         listeners.delete(listener)
       }
-    }
+    },
+
+    [Store.toString()]: true
   }
 
   if (isPromise(initialValue)) {
@@ -136,5 +138,6 @@ export function createSimpleStore<T>(initialValue: T | Promise<T> | typeof None,
 }
 
 export const None = Symbol('None')
+export const Store = Symbol('Store')
 
 export type SimpleStore<T> = ReturnType<typeof createSimpleStore<T>>

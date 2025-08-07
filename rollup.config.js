@@ -1,7 +1,7 @@
-import resolve from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
+import resolve from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 
-const external = ['react'];
+const external = ['react']
 
 const createConfig = (input, outputName) => ({
   input: `src/${input}.ts`,
@@ -11,13 +11,13 @@ const createConfig = (input, outputName) => ({
       file: `dist/${outputName}.cjs`,
       format: 'cjs',
       sourcemap: true,
-      exports: 'named',
+      exports: 'named'
     },
     {
       file: `dist/${outputName}.js`,
       format: 'es',
-      sourcemap: true,
-    },
+      sourcemap: true
+    }
   ],
   plugins: [
     resolve(),
@@ -26,12 +26,9 @@ const createConfig = (input, outputName) => ({
       declaration: true,
       declarationMap: true,
       outDir: 'dist',
-      exclude: ['**/*.test.*', '**/*.spec.*'],
-    }),
-  ],
-});
+      exclude: ['**/*.test.*', '**/*.spec.*']
+    })
+  ]
+})
 
-export default [
-  createConfig('index', 'index'),
-  createConfig('react', 'react'),
-];
+export default [createConfig('index', 'index'), createConfig('react', 'react')]

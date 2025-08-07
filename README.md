@@ -28,38 +28,40 @@ npm install react
 ### Framework Agnostic
 
 ```javascript
-import { createSimpleStore, None } from "simple-store";
+import { createSimpleStore, None } from 'simple-store'
 
 // Create a store
-const counterStore = createSimpleStore(0);
+const counterStore = createSimpleStore(0)
 
 // Get the current value
-console.log(counterStore.get()); // 0
+console.log(counterStore.get()) // 0
 
 // Set a new value
-counterStore.set(1);
-console.log(counterStore.get()); // 1
+counterStore.set(1)
+console.log(counterStore.get()) // 1
 
 // Subscribe to changes
 const unsubscribe = counterStore.subscribe(() => {
-  console.log("Counter changed:", counterStore.get());
-});
+  console.log('Counter changed:', counterStore.get())
+})
 
 // Update with a function
-counterStore.set((prev) => prev + 1);
+counterStore.set((prev) => prev + 1)
 
 // Set to None to create a pending state
-counterStore.set(None);
+counterStore.set(None)
 ```
+
+> **⚠️ Important**: For symbol consistency, import all symbols from the same entry point. Don't mix imports from `simple-store` and `simple-store/react` in the same application when using the `None` symbol.
 
 ### React Hook
 
 ```jsx
-import React from "react";
-import { useSimpleStore, createSimpleStore, None } from "simple-store/react";
+import React from 'react'
+import { useSimpleStore, createSimpleStore, None } from 'simple-store/react'
 
 function Counter() {
-  const [count, setCount] = useSimpleStore(0);
+  const [count, setCount] = useSimpleStore(0)
 
   return (
     <div>
@@ -68,32 +70,57 @@ function Counter() {
       <button onClick={() => setCount((prev) => prev - 1)}>Decrement</button>
       <button onClick={() => setCount(None)}>Reset to Pending</button>
     </div>
-  );
+  )
 }
 ```
 
-> **⚠️ Important**: For symbol consistency, import all symbols from the same entry point. Don't mix imports from `simple-store` and `simple-store/react` in the same application when using the `None` symbol.
+### Global State with React
+
+```jsx
+import React from 'react'
+import { useSimpleStore, createSimpleStore, None } from 'simple-store/react'
+
+// Create and use a global store anywhere
+const UserState = createSimpleStore({ username: '', authToken: '' })
+
+function Counter() {
+  const [user, setUser] = useSimpleStore(UserState)
+
+  const tryAuth = () => {
+    login().then((response) => {
+      setUser((prev) => {
+        prev.username = response.name
+        prev.authToken = response.authToken
+        return prev
+      })
+    })
+  }
+
+  return (
+    <div>
+      <p>Username: {user.username}</p>
+      {user.authToken ? <p>Authenticated</p> : <button onClick={tryAuth}>Authenticate</button>}
+    </div>
+  )
+}
+```
 
 ### Async State
 
 ```jsx
-import { useSimpleStore } from "simple-store/react";
+import { useSimpleStore } from 'simple-store/react'
 
 function UserProfile({ userId }) {
-  const [user, setUser] = useSimpleStore(() =>
-    fetch(`/api/users/${userId}`).then((res) => res.json())
-  );
+  const [user, setUser] = useSimpleStore(() => fetch(`/api/users/${userId}`).then((res) => res.json()))
 
   // Component will suspend until the promise resolves
   return (
     <div>
       <h1>{user.name}</h1>
       <p>{user.email}</p>
-      <button onClick={() => setUser({ ...user, name: "Updated Name" })}>
-        Update Name
-      </button>
+      <button onClick={() => setUser({ ...user, name: 'Updated Name' })}>Update Name</button>
     </div>
-  );
+  )
 }
 ```
 

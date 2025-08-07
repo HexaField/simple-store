@@ -1,2 +1,2 @@
-export { createSimpleStore, None } from './SimpleStore';
-export type { SimpleStore } from './SimpleStore';
+export { None, createSimpleStore } from './SimpleStore'
+export type { SimpleStore } from './SimpleStore'

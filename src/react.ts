@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from 'react'
 
-import { SimpleStore, createSimpleStore } from "./SimpleStore"
-import { use } from "./use"
+import { SimpleStore, Store, createSimpleStore } from './SimpleStore'
+import { use } from './use'
 
 // Re-export main bundle symbols to ensure consistency
-export { createSimpleStore, None } from "./SimpleStore"
-export type { SimpleStore } from "./SimpleStore"
+export { None, Store, createSimpleStore } from './SimpleStore'
+export type { SimpleStore } from './SimpleStore'
 
 /**
  * Hook to use a SimpleStore in a React component.
@@ -14,11 +14,16 @@ export type { SimpleStore } from "./SimpleStore"
  * @returns
  */
 export function useSimpleStore<T>(
-  _store: SimpleStore<T> | (() => T)
+  _store: SimpleStore<T> | (() => T) | T
 ): [T, (value: T | Promise<T> | ((prev: T) => T | Promise<T>)) => void] {
-  let store = _store as SimpleStore<T>
-  if (typeof _store === 'function') {
-    ;[store] = useState(() => createSimpleStore(_store()) as SimpleStore<T>)
+  let store: SimpleStore<T>
+  if (typeof _store === 'object' && _store !== null && Store.toString() in _store) {
+    store = _store as SimpleStore<T>
+  } else if (typeof _store === 'function') {
+    const initFn = _store as () => T
+    ;[store] = useState(() => createSimpleStore(initFn()) as SimpleStore<T>)
+  } else {
+    ;[store] = useState(() => createSimpleStore(_store as T) as SimpleStore<T>)
   }
   const [, forceRerender] = useState({})
 
